@@ -11,18 +11,26 @@ import java.sql.* ;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        String url = "-";
-        String name = "-";
+        String url = "jdbc:mysql://localhost:33017/Students";
+        String name = "cyberus";
         String password = "-";
-        String query = "-";
+        String query = "select first_name from Studentslist where student_id = 2";
 
         //first;y loading our driver
-    Class.forName("com.mysql.jdbc.Driver");
+    Class.forName("com.mysql.cj.jdbc.Driver");
 
     //establishing connection interface
         Connection con = DriverManager.getConnection(url, name , password);
 
         Statement st = con.createStatement();
-        st.executeQuery(query);
+        ResultSet rs = st.executeQuery(query);
+        rs.next();
+        String nameresult = rs.getString( "first_name");
+        System.out.println(nameresult);
+
+
+//        after getting our data we have to close
+        st.close();
+        con.close();
     }
 }
